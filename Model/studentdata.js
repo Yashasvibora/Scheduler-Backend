@@ -1,7 +1,7 @@
 const { Timestamp } = require('mongodb');
 const mongoose= require('mongoose');
 
-const studentSchema= mongoose.Schema({
+const teacherSchema= mongoose.Schema({
     _id:{
         type: String,
         required: true
@@ -44,5 +44,5 @@ const studentSchema= mongoose.Schema({
     },
     
 })
-var studentdata= mongoose.model('studentdata', studentSchema);
-module.exports= studentdata;
+var teacherdata= mongoose.model('teacherdata', teacherSchema);
+module.exports= teacherdata;

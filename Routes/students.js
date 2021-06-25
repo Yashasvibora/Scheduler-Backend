@@ -1,12 +1,12 @@
 const express= require("express");
-const student_Act= require("../Controllers/students");
+const teacher_Act= require("../Controllers/students");
 
 const router= express.Router();
 
-router.get('/', student_Act.getStudents);
-router.get('/:roll',student_Act.getspecStudent);
-router.post('/', student_Act.createstudent);
-router.patch('/:roll', student_Act.updatestudent);
-router.delete('/:roll', student_Act.deletestudent);
+router.get('/', teacher_Act.getTeachers);
+router.get('/:roll',teacher_Act.getspecTeacher);
+router.post('/', teacher_Act.createteacher);
+router.patch('/:roll', teacher_Act.updateteacher);
+router.delete('/:roll', teacher_Act.deleteteacher);
 
 module.exports= router;

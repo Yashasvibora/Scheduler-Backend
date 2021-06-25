@@ -3,7 +3,7 @@ const mongoose= require('mongoose');
 
 const app= express();
 
-const url= "mongodb://localhost:27017/scheduler";
+const url= "mongodb+srv://Yash:mait123@cluster0.dn9io.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 mongoose.connect(url, {
     useNewUrlParser: true,
