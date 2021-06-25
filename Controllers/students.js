@@ -38,6 +38,7 @@ function getValueForNextSequence(sequenceOfName){
 
 const createteacher =  async (req, res) => {
     console.log(req.body);
+
     const newteacher = new Teacher({
         _id: getValueForNextSequence("item_id"), //auto generates an incrementing unique id everytime
         Teacher_Name:req.body.Teacher_Name,
