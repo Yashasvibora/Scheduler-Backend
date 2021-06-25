@@ -51,7 +51,7 @@ const createteacher =  async (req, res) => {
      })
     try {
         await newteacher.save();
-        res.status(201).json(newstudent);
+        res.status(201).json(newteacher);
 
     } catch(error) {
         res.status(400).json({ message : error.message});
