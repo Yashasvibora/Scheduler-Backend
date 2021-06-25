@@ -5,21 +5,21 @@ const Student= require('../Model/studentdata.js');
 
 const router= express.Router();
 
-const getStudents= async(req, res)=>{
+const getTeachers= async(req, res)=>{
     try{
-        const student= await Student.find();
+        const teacher= await Teacher.find();
 
-        res.status(200).json(student);
+        res.status(200).json(teacher);
     } catch(error){
         res.status(404).json({message: error.message});
     }
 }
 
-const getspecStudent= async(req, res)=> {
-    const roll= req.params.roll;
+const getspecTeacher= async(req, res)=> {
+    const TeacherID= req.params.TeacherID;
 
     try{
-        const stud= await Student.findOne({roll: roll});
+        const stud= await Teacher.findOne({roll: roll});
         res.status(200).json(stud);
     } catch(error){
         res.status(404).json({message: error.message});
@@ -36,9 +36,9 @@ function getValueForNextSequence(sequenceOfName){
     return sequenceDoc.sequence_value;
 }*/
 
-const createstudent =  async (req, res) => {
+const createteacher =  async (req, res) => {
     console.log(req.body);
-    const newstudent = new Student({
+    const newteacher = new Teacher({
         _id: getValueForNextSequence("item_id"), //auto generates an incrementing unique id everytime
         Teacher_Name:req.body.Teacher_Name,
         TeacherID:req.body.TeacherID,
@@ -50,7 +50,7 @@ const createstudent =  async (req, res) => {
         Ending_Time: req.body.Ending_Time
      })
     try {
-        await newstudent.save();
+        await newteacher.save();
         res.status(201).json(newstudent);
 
     } catch(error) {
@@ -59,10 +59,10 @@ const createstudent =  async (req, res) => {
 
 }
 
-const updatestudent = async (req, res) => {
-    const roll= req.params.roll;
+const updateteacher = async (req, res) => {
+    const TeacherID= req.params.TeacherID;
     try{
-        await Student.findOneAndUpdate({
+        await Teacher.findOneAndUpdate({
             TeacherID: TeacherID,
         },
         {   
@@ -76,7 +76,7 @@ const updatestudent = async (req, res) => {
             Ending_Time: req.body.Ending_Time
             }
         )
-        res.status(202).json({roll: roll});
+        res.status(202).json({TeacherID: TeacherID});
 
     } catch (error) {
         res.status(401).json({message: error.message});
@@ -84,11 +84,11 @@ const updatestudent = async (req, res) => {
     
 }
 
-const deletestudent = async (req, res) => {
+const deleteteacher = async (req, res) => {
     const TeacherID= req.params.TeacherID;
 
     try {
-        await Student.findOneAndRemove({TeacherID: TeacherID});
+        await Teacher.findOneAndRemove({TeacherID: TeacherID});
         res.status(203).json({TeacherID:TeacherID});
 
     }catch(error) {
@@ -96,8 +96,8 @@ const deletestudent = async (req, res) => {
     }
 }
 
-module.exports.getStudents= getStudents;
-module.exports.createstudent= createstudent;
-module.exports.getspecStudent= getspecStudent;
-module.exports.updatestudent= updatestudent;
-module.exports.deletestudent= deletestudent;
+module.exports.getTeachers= getTeachers;
+module.exports.createteacher= createteacher;
+module.exports.getspecTeacher= getspecTeacher;
+module.exports.updateteacher= updateteacher;
+module.exports.deleteteacher= deleteteacher;
