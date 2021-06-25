@@ -39,7 +39,7 @@ function getValueForNextSequence(sequenceOfName){
 const createstudent =  async (req, res) => {
     console.log(req.body);
     const newstudent = new Student({
-        _id: getValueForNextSequence("sch_id"), //auto generates an incrementing unique id everytime
+        _id: getValueForNextSequence("item_id"), //auto generates an incrementing unique id everytime
         Teacher_Name:req.body.Teacher_Name,
         TeacherID:req.body.TeacherID,
         Event_Name:req.body.Event_Name,
