@@ -1,12 +1,13 @@
-const { Timestamp } = require('mongodb');
-const mongoose= require('mongoose');
+const mongodb = require('mongodb');
+const mongoose = require('mongoose');
 
-const teacherSchema= mongoose.Schema({
-    _id:{
+const teacherSchema = mongoose.Schema({
+
+    _id: {
         type: String,
         required: true
     },
-    Teacher_Name:{
+    Teacher_Name: {
         type: String,
         required: true,
     },
@@ -28,21 +29,21 @@ const teacherSchema= mongoose.Schema({
         type: String,
         required: true,
     },
-    
+
     Starting_Date: {
         type: Date,
-        default: new Date("<YYYY-mm-dd>"),
-    
+        default: new Date("<dd-mm-yyyy>"),
+
     },
-    Starting_Time:{
+    Starting_Time: {
         type: String,
         required: true
     },
-    Ending_Time:{
+    Ending_Time: {
         type: String,
         required: true
     },
-    
+
 })
-var teacherdata= mongoose.model('teacherdata', teacherSchema);
-module.exports= teacherdata;
+var teacherdata = mongoose.model('teacherdata', teacherSchema);
+module.exports = teacherdata;
