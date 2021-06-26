@@ -1,7 +1,8 @@
 const express= require('express');
 const mongoose= require('mongoose');
+const mongodb= require('mongodb');
 
-const Student= require('../Model/studentdata.js');
+const Teacher= require('../Model/teacherdata.js');
 
 const router= express.Router();
 
@@ -19,27 +20,19 @@ const getspecTeacher= async(req, res)=> {
     const TeacherID= req.params.TeacherID;
 
     try{
-        const stud= await Teacher.findOne({roll: roll});
+        const stud= await Teacher.findOne({TeacherID: TeacherID});
         res.status(200).json(stud);
     } catch(error){
         res.status(404).json({message: error.message});
     }
 }
-/*
-//Type the following function in the mongoDB terminal
-function getValueForNextSequence(sequenceOfName){
-    var sequenceDoc= Student.sequence.findOneAndUpdate({
-        query: {_id: sequenceOfName},
-        update: {$inc: {sequence_value: 1}},
-        new: true
-    });
-    return sequenceDoc.sequence_value;
-}*/
+
+
 
 const createteacher =  async (req, res) => {
     console.log(req.body);
     const newteacher = new Teacher({
-        _id: getValueForNextSequence("item_id"), //auto generates an incrementing unique id everytime
+        _id: req.body.TeacherID + req.body.EventID + req.body.Starting_Date + req.body.Ending_Time, 
         Teacher_Name:req.body.Teacher_Name,
         TeacherID:req.body.TeacherID,
         Event_Name:req.body.Event_Name,
