@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	</head>
+<body onload="load()">
+<div style="background-image: url(schedules.jpg);text-align: center;background-size:contain;background-repeat:round;">
+<h1>Event Scheduler</h1>
+<p>This is a and Application to arrange schedule.</p>
+</div>
+<div id="container">
+	<div id="subcon1" style="width:20%;float:left;margin-right: 2%;vertical-align: top;">
+		<div id="eventpanel" style="background-color:steelblue;height: 30px;border-top-left-radius: 10px;border-top-right-radius: 10px;margin-bottom: 0px;" onclick="funcEvPanel()">
+			<h3 style="text-align: center;">Event Panel</h3>
+		</div>	
+			<div id="eventcreate" style="visibility: hidden; background-color:lightsteelblue;padding: 5px; height: 0px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+			<form action="#">
+				<h10 style="font-weight: bold;">Event name        :</h10><input type="text" name="eventname" value="Event Name"></br></br>
+				<h10 style="font-weight: bold;">Event Description :</h10><input type="text" name="eventdesc" value="Event Description"></br></br>
+				<input type="submit" value="Submit"></br>
+			  </form>
+			</div>
+			<div id="schedulepanel" style="background-color:steelblue;height: 30px;border-top-left-radius: 10px;border-top-right-radius: 10px;margin-bottom: 0px;" onclick="funcSchPanel()"> 
+				<h3 style="text-align: center;">Schedule Panel</h3>	  
+			</div>	
+			<div id="schedulecreate" style="visibility: hidden; background-color:lightsteelblue;padding: 5px; height: 0px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+					<form action="#">
+						<h10 style="font-weight: bold;">Event      :</h10><select id="eventdrpdn" ><option>select</option></select></br></br>
+						<h10 style="font-weight: bold;">Date       :</h10><input type="text" id="scheduledate" value="dd/mm/yyyy"></br></br>
+						<h10 style="font-weight: bold;">Start time&nbsp;&nbsp;:</h10><input type="text" id="schedulestart" value="hh24/mm"></br></br>
+						<h10 style="font-weight: bold;">Start time&nbsp;&nbsp;:</h10><input type="text" id="scheduleend" value="hh24/mm"></br></br>
+						<input type="submit" value="Submit">
+				  </form>
+				</div>
+			<div id="calpanel" style="background-color:steelblue;height: 30px;border-top-left-radius: 10px;border-top-right-radius: 10px;margin-bottom: 0px;" onclick="funcSchd()"> 
+				<h3 style="text-align: center;">Schedules</h3>
+			</div>		  	
+			<div id="showcal" style="visibility: hidden; background-color:lightsteelblue;padding: 5px; height: 0px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+					<h4>Teacher :</h4>
+					<select id="guestid" name="Teacher" onchange="setTeacher()">
+						<option id="t0">Select</option>
+						<option id="07T">07T</option>
+						<option id="t2">Random2</option>
+						<option id="t3">Random3</option>
+						<option id="08T">08T</option>
+						<option id="09T">09T</option>
+						<option id="010T">010T</option>
+					</select>
+					<!--button id="tc" type="submit"  onclick="toggle()">
+						Toggle Calender
+					</button-->					
+				</div>		
+			  
+	</div>
+	<div id="subcon2" style="width:78%;float:left;">
+		<div id="calender" style="width:100%;">
+			<div id="calhead" style="background-color:steelblue;padding: 5px;width: 50%;margin-left: 20%; height:20px;">
+				<div style="float:left"><button>Prev Month</button></div>
+				<div id="headertext" style="float:left;"><h6 style="text-align: center;"></h6></div>	
+				<div style="float:right"><button>Next Month</button></div>
+			</div></br></br></br>
+		<!--p style="font: 20;font-weight: bold;">Today's Date is <script>document.write(new Date());</script></p-->
+		<!--div id="calenderday">
+		
+		</div-->
+		</div>
+	</div>	
+</div>
+<script language="javascript">
+function toggle()
+	{
+		if(document.getElementById('calender').style.visibility=='hidden')
+		{ ////alert('inside if');
+			document.getElementById('calender').style.visibility='visible';
+		}	
+		else
+		{ ////alert('inside else');
+			document.getElementById('calender').style.visibility='hidden';
+		}	
+	}	
+/*text = '{ "teachers" : [' +
+'{ "tid":"1" , "schedules":['+
+							'{"eventid":1,"date": "25062021","starttime":"0900","endtime":"1000"},'+
+    						'{"eventid":2,"date": "25062021","starttime":"1100","endtime":"1200"},'+
+							'{"eventid":3,"date": "27062021","starttime":"1200","endtime":"1300"}'+
+							']}' +/*
+'{ "tid":"2" , "schedules":[]},' +*/
+/*']}';*/
+/*text = '{"schedules":[{"_id":"1","Teacher_Name":"Rohit","TeacherID":1,"EventID":42123,"Event_Description":"Event 1 on 5th June",'+
+'"Starting_Date":"2021-06-05","Starting_Time":"4:50","Ending_Time":"5:50"},'+
+'{"_id":"t2","Teacher_Name":"Rohit","TeacherID":1,"EventID":42123,"Event_Description":"Event 1 on 6th June",'+
+'"Starting_Date":"2021-06-15","Starting_Time":"4:50","Ending_Time":"5:50"},'+
+'{"_id":"t3","Teacher_Name":"Yash","TeacherID":2,"EventID":42124,"Event_Description":"Event 2 on 25th June",'+
+'"Starting_Date":"2021-06-25","Starting_Time":"4:50","Ending_Time":"5:50"}'+
+']}';*/
+//text="[{\n  Starting_Date: '26062021',\n  _id: '06666260620210630',\n  Teacher_Name: 'Random_person6',\n  TeacherID: '06',\n  Event_Name: 'Subject6',\n  EventID: '666',\n  Event_Description: 'Computer Science- 3',\n  Starting_Time: '0445',\n  Ending_Time: '0630',\n  __v: 0,\n  studentId: 31536\n},{\n  Starting_Date: '26062021',\n  _id: '07T777E260620210230',\n  Teacher_Name: 'Random_person7',\n  TeacherID: '07T',\n  Event_Name: 'Subject7',\n  EventID: '777E',\n  Event_Description: 'Computer Science- 4',\n  Starting_Time: '0745',\n  Ending_Time: '0230',\n  __v: 0,\n  studentId: 31535\n}]";
+//text="[{\n  \"Starting_Date\": '26062021',\n  _id: '06666260620210630',\n  Teacher_Name: 'Random_person6',\n  TeacherID: '06',\n  Event_Name: 'Subject6',\n  EventID: '666',\n  Event_Description: 'Computer Science- 3',\n  Starting_Time: '0445',\n  Ending_Time: '0630',\n  __v: 0,\n  studentId: 30828\n},{\n  Starting_Date: '26062021',\n  _id: '07T777E260620210230',\n  Teacher_Name: 'Random_person7',\n  TeacherID: '07T',\n  Event_Name: 'Subject7',\n  EventID: '777E',\n  Event_Description: 'Computer Science- 4',\n  Starting_Time: '0745',\n  Ending_Time: '0230',\n  __v: 0,\n  studentId: 30830\n}]"
+//text.replace("\\\"","");
+//text.replace("\n","");
+//text.replace(" ","");
+//console.log(text);
+//jsonobject = JSON.parse(text);
+//alert(jsonobject);
+//console.log(">>>>>>>   json >>>>>   "+jsonobject);
+tid = null;
+var today = new Date();	
+lastday=null;
+var mnname= null;
+function load()
+{			
+			calender =  document.getElementById("calender");
+			
+			//today.setFullYear(2021,07,15);
+			var wdindx =  [0,1,2,3,4,5,6];
+			var wdname  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+			 mnname  = ['January','February','March','April','May','June','July', 'August', 'September', 'October', 'November', 'December'];
+
+			var wday = today.getDay();
+			var month = today.getMonth();
+			var day = today.getDate();
+			elementheader = document.createElement("div");
+			elementheader.setAttribute('id',0);
+			calender.appendChild(elementheader);
+			for(j=0;j<7;j++)
+			{
+				
+				element = document.createElement("div"); 
+				element.setAttribute('id',wdname[j]);
+				//element.setAttribute('class','float-child');
+				if(j%2==0)
+				element.setAttribute('style',"height:10%;width:9%;background-color:steelblue;border:1px grey solid;padding: 2%;float:left; border-top-left-radius:8px;border-top-right-radius:8px;text-allign:centre;font-weight:bold;");
+				else
+				element.setAttribute('style',"height:10%;width:9%;background-color:steelblue;border:1px grey solid;padding: 2%;float:left; border-top-left-radius:8px;border-top-right-radius:8px;text-allign:centre;font-weight:bold;");
+				text = document.createTextNode(wdname[j]); 
+				element.appendChild(text);
+				//calender.innerHTML="<div id="+j+"class=\"disabled\" style=\"{'width':10%;'background-color':'lightgreen';'borderwidth':'2px';}\""+j+"></div>";
+				//alert(eval(element));//calender
+						
+				elementheader.appendChild(element);
+				//calender.appendChild('/br/br/br/br');
+				//alert(element.getAttribute('style'));
+				
+				
+			}	
+		//	var lastday=null;
+			////alert("lastday >>>>>>>>  "+lastday);
+
+			//if (today.getMonth() in [0,2,4,6,7,9,11])
+			//if (month in [0,2,4,6,7,9,11])
+	
+			if ([0,2,4,6,7,9,11].indexOf(month)!==-1)
+			lastday = 31;
+			//else if (today.getMonth() in [3,5,8,10])
+	//		else if (month in [3,5,8,10])
+			else if ([3,5,8,10].indexOf(month)!==-1)
+			lastday = 30;
+			else if (today.getYear()%4==0)
+			lastday = 29;
+			else
+			lastday = 28;
+			////alert(" >>>>>>>>>  wday  "+wday + "   >>>>>>>>>  day  "+day+'   lastday >>>>>>>>>  '+lastday+" >>>>> month    "+today.getMonth())
+			//firstday = eval(eval(day%7-3+wday)%6);
+			//firstday = wday+eval(7+eval(day-1)%7)%7;
+			firstday = (7+(wday-(day-1)%7))%7;
+			////alert('eekday >>>>>>>>>  '+ wdname[today.getDay()]);
+			////alert('firstday >>>>  '+ wdname[firstday]);
+			divelement = document.createElement("div"); 
+			divelement.setAttribute('id',1);
+			calender.appendChild(divelement);
+			for(i=1;i<36;i++)
+			{
+				if(i%7==1 & i/7>0)
+				{
+					divelement = document.createElement("div"); 
+					divelement.setAttribute('id',i/7+1);
+				}
+				if(i<=firstday | (i-firstday)>lastday)
+				{
+					element = document.createElement("div"); 
+					element.setAttribute('id',i-firstday);	
+					element.setAttribute('style',"height:40px;width:9%;background-color:lightgrey;border:1px grey solid;;padding-left: .5%;padding-right: 3.5%;padding-bottom: 2%;float:left;text-align:left;vertical-align:top;font:15px white bold;white-space:norap;overflow:hidden;text-overflow:ellipsis;overflow:scroll;");
+					//element = "<div id="+i+"class=\"disabled\" style=\"{'width':10%;'background-color':'lightgreen';'borderwidth':'2px';}\""+i+"></div>"
+				}
+				else
+				{
+					//element = "<div id="+i+"class=\"enabled\" style=\"{'width':10%;'background-color':'Yellow';'borderwidth':'2px';}\""+i+"></div>"
+					element = document.createElement("div"); 
+					element.setAttribute('id',i-firstday);
+					//element.setAttribute('id',i);	
+					element.setAttribute('style',"height:40px;width:9%;background-color:lightsteelblue;border:1px grey solid;padding-left: .5%;padding-right: 3.5%;padding-bottom: 2%;float:left;text-align:left;vertical-align:top;font:15px white bold;overflow:scroll;");
+					text = document.createTextNode(i-firstday); 
+					//text = document.createTextNode(i); 
+					element.appendChild(text);
+				}
+				divelement.appendChild(element);
+				if(i%7==0 & i/7>0)
+				{
+					calender.appendChild(divelement);	
+				}
+			}
+			$.ajax
+				({	url: 'http://localhost:5000/teachers',
+  					complete: function(data) 
+					{
+    					console.log(data);
+						jsonobject=data.responseJSON;
+  					}
+				});
+		/*	for (let x in jsonobject.teachers)
+			{
+				console.log(" >>>>>>>>>>>>>>>   Printing schedule "+jsonobject.teachers[x].tid);
+			if(jsonobject.teachers[x].tid==1)
+			{	
+				console.log(" >>>>>>>>>>>>>>>   Printing schedule \n\n");
+				for (y in jsonobject.teachers[x].schedules)
+				{
+					console.log(" >>>>>>>>>>>>>>>   "+jsonobject.teachers[x].schedules[y].eventid);
+					console.log(" date of the event ss>>>>>>>>>>>>>>>   "+(jsonobject.teachers[x].schedules[y].date).substring(0,2));
+					element = document.createElement('div');
+					element.setAttribute('id',jsonobject.teachers[x].schedules[y].eventid);
+					element.setAttribute('style',"width:100%;height:15px;background-color:yellow;white-space:norap;overflow:hidden;text-overflow:ellipsis;border:1px black solid;");
+					text = document.createTextNode('event is scheduled for the day >>>  '+jsonobject.teachers[x].schedules[y].eventid);
+					element.appendChild(text);
+					document.getElementById(jsonobject.teachers[x].schedules[y].date.substring(0,2)).appendChild(element);
+					//document.getElementById(jsonobject.teachers[x].schedules[y].date.substring(0,2)).innerText = 'event is scheduled for the day >>>  '+jsonobject.teachers[x].schedules[y].eventid;
+					console.log(" >>>>>>>>>>>>>>>   "+jsonobject.teachers[x].schedules[y].date);
+					console.log(" >>>>>>>>>>>>>>>   "+jsonobject.teachers[x].schedules[y].starttime);
+					console.log(" >>>>>>>>>>>>>>>   "+jsonobject.teachers[x].schedules[y].endtime);
+				}
+			}
+	}*/
+	document.getElementById('calender').style.visibility='hidden';
+	populateeventdrpdwn();		
+}
+function setTeacher(){
+	//alert("   document.getElementById(guestid).value >>>>>>  "+document.getElementById("guestid").selectedIndex);
+	for(let k=1; k<lastday+1; k++)
+		{//alert(1);
+			document.getElementById(k).innerHTML='';	
+			text = document.createTextNode(k); 
+					//text = document.createTextNode(i); 
+			document.getElementById(k).appendChild(text);
+		}
+	////alert(' >>>>>>>>>>   '+document.getElementById("headertext"));
+	document.getElementById("headertext").innerHTML= 'This is '+document.getElementById("guestid").value+"'s Calender" + " and current month is " + mnname[parseInt(today.getMonth())];
+	tid = document.getElementById("guestid").value;
+	//var k =0;
+	
+	//document.getElementById(parseInt((jsonobject[x].Starting_Date).substring(8,10))).removeChild(document.getElementById(parseInt((jsonobject[x]._id))));
+	//for (let x in jsonobject)
+	for (let x in jsonobject)
+		{alert(jsonobject[x].TeacherID + '> > >  ' + tid);
+				
+			//if(jsonobject[x].TeacherID==tid)
+			if(jsonobject[x].TeacherID==tid)
+			{	
+				
+				console.log(" >>>>>>>>>>>>>>>   Printing schedule teacher id matched "+jsonobject[x].TeacherID);
+				console.log("year match   "+today.getFullYear()+"    today.getMonth()   "+today.getMonth())
+				console.log("(jsonobject[x].Starting_Date).substring(0,4) >>>> "+(jsonobject[x].Starting_Date).substring(0,4));
+				console.log("(jsonobject[x].Starting_Date).substring(5,6) >>>> "+parseInt((jsonobject[x].Starting_Date).substring(5,7)));
+				
+				if(((jsonobject[x].Starting_Date).substring(0,4)==today.getFullYear())
+				     & (parseInt((jsonobject[x].Starting_Date).substring(5,7))==eval((today.getMonth()+1))))
+				{
+					console.log(" >>>>>>>>>>>>>>>   Year and month matched \n\n");
+					console.log(" >>>>>>>>>>>>>>>   "+jsonobject[x].EventID);
+					console.log(" date of the event ss>>>>>>>>>>>>>>>   "+(jsonobject[x].Starting_Date).substring(0,10));
+					element = document.createElement('div');
+					element.setAttribute('id',jsonobject[x]._id);
+					element.setAttribute('style',"width:100%;height:15px;background-color:yellow;white-space:norap;overflow:hidden;text-overflow:ellipsis;border:1px black solid;");
+					text = document.createTextNode(jsonobject[x].Event_Description);
+					element.appendChild(text);
+					console.log(" >>>>>>     (jsonobject[x].Starting_Date).substring(8,9) >>>> "+(jsonobject[x].Starting_Date).substring(8,10));
+					document.getElementById(parseInt((jsonobject[x].Starting_Date).substring(8,10))).appendChild(element);
+				}	
+			}	
+		}
+
+}		
+function populateeventdrpdwn(){
+	var eventdrpdn = document.getElementById('eventdrpdn'); 
+	text = '{"events":[{"eventid":1,"eventname":"event1","eventdesc":"Event1 description"},'+
+						'{"eventid":2,"eventname":"event2","eventdesc":"Event2 description"},'+
+						'{"eventid":3,"eventname":"event3","eventdesc":"Event3 description"}]}';
+	//var options = ["1", "2", "3", "4", "5"]; 
+	var options=[];
+	var values = [];
+	jsonobject2 = JSON.parse(text);
+	for (x in jsonobject2.events)
+	{////alert(' jsonobject.events >>>>>>   '+jsonobject2.events[x]);
+		//options.push(jsonobject[x].eventid);
+		//values.push(jsonobject[x].eventname);
+	//}
+
+	//for(var i = 0; i < options.length; i++) {
+		//var opt = jsonobject[x].eventid;
+		var el = document.createElement("option");
+		el.textContent = jsonobject2.events[x].eventname;
+		el.value = jsonobject2.events[x].eventid;
+		eventdrpdn.appendChild(el);
+		}
+	//document.getElementById('eventdrpdn')
+	}
+	function funcEvPanel(){
+		if(document.getElementById('eventcreate').style.visibility=='hidden'){
+			document.getElementById('eventcreate').style.height='30%';
+			document.getElementById('eventcreate').style.visibility='visible';
+			document.getElementById('schedulecreate').style.height='0px';
+			document.getElementById('schedulecreate').style.visibility='hidden';
+			document.getElementById('showcal').style.height='0px';
+			document.getElementById('showcal').style.visibility='hidden';	
+		}
+		else{
+			document.getElementById('eventcreate').style.height='0px';
+			document.getElementById('eventcreate').style.visibility='hidden';
+		}
+		document.getElementById('calender').style.visibility='hidden';
+	}
+	function funcSchd(){
+		if(document.getElementById('showcal').style.visibility=='hidden'){
+			document.getElementById('showcal').style.height='30%';
+			document.getElementById('showcal').style.visibility='visible';
+			document.getElementById('schedulecreate').style.height='0px';
+			document.getElementById('schedulecreate').style.visibility='hidden';
+			document.getElementById('eventcreate').style.height='0px';
+			document.getElementById('eventcreate').style.visibility='hidden';
+		}
+		else{
+			document.getElementById('showcal').style.height='0px';
+			document.getElementById('showcal').style.visibility='hidden';
+		}
+		document.getElementById('calender').style.visibility='visible';
+	}
+	
+	function funcSchPanel(){
+		if(document.getElementById('schedulecreate').style.visibility=='hidden'){
+			document.getElementById('schedulecreate').style.height='30%';
+			document.getElementById('schedulecreate').style.visibility='visible';
+			document.getElementById('eventcreate').style.height='0px';
+			document.getElementById('eventcreate').style.visibility='hidden';
+			document.getElementById('showcal').style.height='0px';
+			document.getElementById('showcal').style.visibility='hidden';
+		}
+		else{
+			document.getElementById('schedulecreate').style.height='0px';
+			document.getElementById('schedulecreate').style.visibility='hidden';
+		}
+		document.getElementById('calender').style.visibility='hidden';
+	}
+</script>
+</body>
+</html>
